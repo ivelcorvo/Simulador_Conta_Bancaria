@@ -82,7 +82,7 @@ public class ContaBanco {
                 System.out.println("|| CONTA JÁ ABERTA ||");
             }
         }else{
-            System.out.println(" +++ ERRO. TIPO INVÁLIDO +++ ");
+            System.out.println("|| --- ERRO. TIPO INVÁLIDO --- ||");
         }   
     }
     
@@ -90,7 +90,7 @@ public class ContaBanco {
     public void fecharConta(){
         if(this.isStatus()==true){
             if(this.getSaldo() > 0){
-                System.out.println("|| CONTA COM SALDO. NÃO É  POSSÍVEL ENCERRAR ||\n");
+                System.out.println("|| CONTA COM SALDO. NÃO É POSSÍVEL ENCERRAR ||\n");
             }else if(this.getSaldo() < 0){
                 System.out.println("|| CONTA EM DÉBITO. NÃO É POCIVEL ENCERRAR ||\n");
             }else{
@@ -108,8 +108,7 @@ public class ContaBanco {
             this.setSaldo(getSaldo()+v);
             System.out.println("|| deposito de: R$"+v+" na conta de "+this.getDono()+" ||\n");
         }else{
-            System.out.println("|| IMPOSSÍVEL DEPOSITAR ||");
-            System.out.println("|| CONTA ESTÁ FECHADA ||");
+            System.out.println("|| CONTA ESTÁ FECHADA. IMPOSSÍVEL DEPOSITAR ||");
         }
     }
     
@@ -123,7 +122,7 @@ public class ContaBanco {
                 System.out.println("|| SALDO INSUFICIENTE ||");
             }
         }else{
-            System.out.println("|| CONTA ESTÁ FECHADA ||");
+            System.out.println("|| CONTA ESTÁ FECHADA. IMPOSSÍVEL SACAR ||");            
         }
     }
     
@@ -149,13 +148,13 @@ public class ContaBanco {
     
     //=================================================================================
     public void mostrarStatus(){
-        System.out.println("=================================");
-        System.out.println("| DONO: "+this.getDono()+"\n"+
-                           "| NUMERO: "+this.getNumConta()+"\n"+
-                           "| TIPO: "+this.getTipo()+"\n"+
-                           "| STATUS: "+this.isStatus()+"\n"+
-                           "| SALDO: R$"+this.getSaldo());
-        System.out.println("=================================");
+        System.out.println("++===============================\n"+
+                           "|| DONO: "+this.getDono()+"\n"+
+                           "|| NUMERO: "+this.getNumConta()+"\n"+
+                           "|| TIPO: "+this.getTipo()+"\n"+
+                           "|| STATUS: "+this.isStatus()+"\n"+
+                           "|| SALDO: R$"+this.getSaldo()+"\n"+
+                           "++===============================");
     }
 
     

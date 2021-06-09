@@ -4,7 +4,7 @@ package oo4;
 public class ContaBanco {
     private String dono;
     private String tipo;
-    private String numConta;
+    private int numConta;
     private float saldo;
     private boolean status;
     //=================================================================================
@@ -29,10 +29,10 @@ public class ContaBanco {
         this.tipo = tipo;
     }
     
-    public String getNumConta(){
+    public int getNumConta(){
         return this.numConta;
     }
-    public void setNumConta(String numConta){
+    public void setNumConta(int numConta){
         this.numConta = numConta;
     }
     
@@ -52,37 +52,23 @@ public class ContaBanco {
     
     //=================================================================================
     // metodos     
-    public void abrirConta(String t){
-        //modo que fiz mais simples
-        /*
-        this.setTipo(t);
-        this.setStatus(true);
-        if(this.getTipo()=="CP"){
-            this.setSaldo(150);
-        }else if(this.getTipo()=="CC"){
-            this.setSaldo(50);
-        } */
-    
-        if(t == "CP"){
-            this.setTipo(t);
-            if(this.isStatus() == false){
+    public void abrirConta(String t){    
+        if(this.isStatus() == false){
+            if(t.equals("CP")){
                 this.setStatus(true);
-                System.out.println("|| CONTA POUPANÇA ABERTA  COM SUCESSO ||");
+                this.setTipo(t);
                 this.setSaldo(150f);
-            }else{
-                System.out.println("|| CONTA JÁ ABERTA ||");
-            }
-        }else if(t == "CC"){
-            this.setTipo(t);
-            if(this.isStatus() == false){
+                System.out.println("|| CONTA POUPANÇA ABERTA COM SUCESSO ||");
+            }else if(t.equals("CC")){
                 this.setStatus(true);
-                System.out.println("|| CONTA CORRENTE ABERTA  COM SUCESSO ||");                
+                this.setTipo(t);
                 this.setSaldo(50f);
+                System.out.println("|| CONTA CORRENTE ABERTA  COM SUCESSO ||");
             }else{
-                System.out.println("|| CONTA JÁ ABERTA ||");
+                System.out.println("|| --- ERRO. TIPO INVÁLIDO --- ||");
             }
         }else{
-            System.out.println("|| --- ERRO. TIPO INVÁLIDO --- ||");
+            System.out.println("|| CONTA JÁ ABERTA ||");
         }   
     }
     
@@ -92,9 +78,12 @@ public class ContaBanco {
             if(this.getSaldo() > 0){
                 System.out.println("|| CONTA COM SALDO. NÃO É POSSÍVEL ENCERRAR ||\n");
             }else if(this.getSaldo() < 0){
-                System.out.println("|| CONTA EM DÉBITO. NÃO É POCIVEL ENCERRAR ||\n");
+                System.out.println("|| CONTA EM DÉBITO. NÃO É POSSÍVEL ENCERRAR ||\n");
             }else{
                 System.out.println("|| CONTA ENCERRADA ||\n");
+                this.setDono(null);
+                this.setNumConta(0);
+                this.setTipo(null);
                 this.setStatus(false);
             }
         }else{
@@ -105,8 +94,8 @@ public class ContaBanco {
     //=================================================================================
     public void depositar(float v){
         if(this.isStatus() == true){
-            this.setSaldo(getSaldo()+v);
-            System.out.println("|| deposito de: R$"+v+" na conta de "+this.getDono()+" ||\n");
+            this.setSaldo(this.getSaldo()+v);
+            System.out.println("|| DEPOSITO DE: R$"+v+". NA CONTA DE "+this.getDono()+" ||\n");
         }else{
             System.out.println("|| CONTA ESTÁ FECHADA. IMPOSSÍVEL DEPOSITAR ||");
         }
@@ -115,9 +104,9 @@ public class ContaBanco {
     //=================================================================================
     public void sacar(float v){
         if(this.isStatus() == true ){
-            if(getSaldo()>=v){
-                this.setSaldo(getSaldo()-v);
-                System.out.println("|| Saque de: R$"+v+" feito na conte de "+this.getDono()+" ||\n");
+            if(this.getSaldo() >= v){
+                this.setSaldo(this.getSaldo() - v);
+                System.out.println("|| SAQUE DE: R$"+v+". REALIZADO NA CONTA DE "+this.getDono()+" ||\n");
             }else{
                 System.out.println("|| SALDO INSUFICIENTE ||");
             }
@@ -135,8 +124,8 @@ public class ContaBanco {
             }else if(this.getTipo()=="CC"){
                 v = 10;
             }
-            if(this.getSaldo()>=v){
-                this.setSaldo(getSaldo()-v);
+            if(this.getSaldo() >= v){
+                this.setSaldo(getSaldo() - v);
                 System.out.println("|| PAGAMENTO MENSAL REALIZADO ||");
             }else if(this.getSaldo()<v){
                 System.out.println("|| SALDO INSUFICIENTE ||");
@@ -144,6 +133,12 @@ public class ContaBanco {
         }else{
             System.out.println("|| CONTA ESTÁ FECHADA. IMPOSSÍVEL PAGA ||");
         }
+    }
+    
+    //=================================================================================
+    public void nome_numero(String nome, int numero){
+        this.setDono(nome);
+        this.setNumConta(numero);
     }
     
     //=================================================================================
@@ -155,11 +150,5 @@ public class ContaBanco {
                            "|| STATUS: "+this.isStatus()+"\n"+
                            "|| SALDO: R$"+this.getSaldo()+"\n"+
                            "++===============================");
-    }
-
-    
-    
-            
-    
-
+    }                      
 }
